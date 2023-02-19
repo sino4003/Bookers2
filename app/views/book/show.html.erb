@@ -1,0 +1,54 @@
+<% flash.each do |key, value| %>
+    <%= content_tag(:div, value, class: "#{key}") %>
+  <% end %>
+<div class="col-md-3">
+<%= render 'layouts/userinfo', user: @user %>
+<%= render 'layouts/newbook', book: @newbook %>
+</div>
+
+<div class="col-md-8 offset-md-1">
+    <h2>Book detail</h2>
+     <%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
+      <%= link_to @user.name, user_path(@user) %>
+      <%= link_to @book.title, book_path(@book) %>
+      <%= @book.body %>
+<% if @book.user.id == current_user.id %>
+ <%= link_to "Edit", edit_book_path %>
+<%= link_to "Destroy", book_path, method: :delete %>
+<% end %>
+</div>
+
+<div class="comments">
+<p>コメント件数：<%= @book.book_comments.count %></p>
+<% @book.book_comments.each do |book_comment| %>
+  <p><%= attachment_image_tag(book_comment.user, :profile_image, :fill, 100, 100, fallback: "no_image.jpg") %></p>
+  <%= book_comment.user.name %>
+  <%= book_comment.created_at.strftime('%Y/%m/%d') %><%= book_comment.comment %>
+  <% if book_comment.user == current_user %>
+  <div class="comment-delete">
+    <%= link_to "削除", book_book_comment_path(book_comment.book, book_comment), method: :delete %>
+  </div>
+  <% end %>
+<% end %>
+</div>
+<div class="new-comment">
+<%= form_with(model:[@book, @book_comment], local: true) do |f| %>
+  <%= f.text_area :comment, rows:'5',placeholder: "コメントをここに" %>
+  <%= f.submit "送信する" %>
+<% end %>
+<% if @book.favorited_by?(current_user) %>
+    <p>
+      <%= link_to book_favorites_path(@book), method: :delete do %>
+        ♥<%= @book.favorites.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to book_favorites_path(@book), method: :post do %>
+        ♡<%= @book.favorites.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
+
+
+</div>
