@@ -1,10 +1,22 @@
-<h2>Log in</h2>
+<div><%= flash[:notice] %></div>
+<!--ログアウト成功時のフラメ-->
 
-<%= form_with model: @user, url: user_session_path do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="container">
+
+  <div class="mt-3">
+    <h2>Log in</h2>
   </div>
+
+  <%= form_with model: @user, url: user_session_path do |f| %>
+
+  　<!--以下追記-->
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+　<!--以下email登録フォーム削除-->
+
 
   <div class="field">
     <%= f.label :password %><br />
@@ -18,9 +30,11 @@
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="actions btn btn-primary btn-sm">
+    <%= f.submit "Log in", class: "bg-primary text-white border border-primary" %>
   </div>
 <% end %>
-
 <%= render "devise/shared/links" %>
+
+
+</div>

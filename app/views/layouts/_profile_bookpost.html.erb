@@ -1,0 +1,44 @@
+<div class="col-md-3">
+<!--ここから共通-->
+<!--自身の情報-->
+<div class="mt-3">
+  <h2>User info</h2>
+</div>
+
+<%= image_tag user.get_profile_image(100, 100) %>
+
+  <table class="table">
+    <tr>
+      <th>name</th>
+      <th><%= user.name %></th>
+    </tr>
+      <tr>
+        <th>introduction<%= user.introduction %></th>
+      </tr>
+  </table>
+
+
+  <%= link_to edit_user_path(user.id) do %>
+    <div class="btn btn-block btn-outline-secondary">
+      <i class="fas fa-user-cog"></i>
+    </div>
+  <% end %>
+
+<!--投稿フォーム-->
+<div class="mt-4">
+  <h2>New book</h2>
+</div>
+
+<%= form_with model: book do |f| %>
+<div class="form-group">
+  <h5>Title</h5>
+  <%= f.text_field :title %>
+</div>
+<div class="form-group">
+  <h5>Opinion</h5>
+  <%= f.text_area :body %>
+</div>
+
+  <%= f.submit "Create Book", class: "bg-success text-white border border-success" %>
+<% end %>
+</div>
