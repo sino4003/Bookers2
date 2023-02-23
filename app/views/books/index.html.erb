@@ -35,7 +35,7 @@
         <tr>
           <td>
             <%= link_to user_path(book.id) do %>
-              <%= image_tag book.get_image(100, 100) %>
+              <%= image_tag book.user.get_profile_image(100, 100) %>
             <% end %>
           </td>
           <!--以下本のタイトルからbook詳細ページbook_pathに遷移-->
